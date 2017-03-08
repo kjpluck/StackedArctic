@@ -62,12 +62,14 @@ void generateIce(int dayNum){
       {
         translate(0,0,1);
         
+        // Filter out as much noise as possible
         if(isLonePixel(map, x, z)) continue;
         
         color pixel = map.pixels[x+(z*_maxX)];
                 
         fill(pixel);
         
+        // To reduce number of cubes drawn only draw the shoreline and the top layer of land i.e. the land is hollow.
         if(isShoreLine(pixel))
         {
           fill(119,119,119); // Make it look like land
@@ -121,6 +123,8 @@ boolean isLonePixel(PImage map, int x, int z)
   color s = map.pixels[x+((z - 1) *_maxX)];
   color e = map.pixels[(x + 1) + (z*_maxX)];
   color w = map.pixels[(x - 1) + (z*_maxX)];
+  
+  // Meh.  Just filter out any ice that is in direct contact with water.
   
   if(isWater(s)) return true;
   if(isWater(n)) return true;
